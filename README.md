@@ -11,4 +11,12 @@ Extends Navigation Node to allow AI characters non-conventional ways to travel.
 e.g. rope climbing, jumping chasms, using pipes or chasing the player on roofs.
 
 
-still in development, for now this repo is only for linking
+still in development, for now this repo is only for linking.
+
+You can watch the development steps and process on Youtube.
+
+https://www.youtube.com/channel/UCMCGlUIFMqeJ8JDMHlWXDjg/videos
+
+[![version1.3](https://img.youtube.com/vi/DWaBjEu2FvM/hqdefault.jpg)](https://youtu.be/DWaBjEu2FvM)
+[![version1.4](https://img.youtube.com/vi/jijXbmYJYfM/hqdefault.jpg)](https://youtu.be/jijXbmYJYfM)
+[![version1.5](https://img.youtube.com/vi/BRDGLp6CQpw/hqdefault.jpg)](https://youtu.be/BRDGLp6CQpw)
