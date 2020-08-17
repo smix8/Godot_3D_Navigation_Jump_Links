@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 1, 1, 1 )
+
+[node name="Jump_Link_Object_Mesh" type="MeshInstance" groups=[
+"jump_links_debug",
+]]
+layers = 512
+cast_shadow = 0
+mesh = SubResource( 1 )
+material/0 = null
