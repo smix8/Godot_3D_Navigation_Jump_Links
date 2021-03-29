@@ -1,7 +1,9 @@
-tool
-extends Area
 
-class_name JumpLinkObject, "res://addons/navigation_jump_links/icons/JumpLinkObject.png"
+class_name JumpLinkObject
+
+extends Area3D
+
+@icon("res://addons/navigation_jump_links/icons/JumpLinkObject.png")
 
 ##############################################################################
 ### Extended Area node that groups an infinite number of JumpLink children and controls their usage.
@@ -9,8 +11,13 @@ class_name JumpLinkObject, "res://addons/navigation_jump_links/icons/JumpLinkObj
 
 signal weight_changed
 
-export(float) var weight_cost = 1.0 setget _set_weight_cost, get_weight_cost
-export(String) var required_tag
+@export var weight_cost : float = 1.0:
+	set(value):
+		_set_weight_cost(value)
+	get:
+		return get_weight_cost()
+
+@export var required_tag : String
 
 var _jump_points : Array = []
 var _jump_links : Array = []
@@ -41,7 +48,7 @@ func _enter_tree() -> void:
 		### don't create childnode structure while we are alone in a scene, e.g. user opened addon node directly
 		return
 	
-	var _new_jump_link_object_mesh : MeshInstance
+	var _new_jump_link_object_mesh : MeshInstance3D
 	if not has_node("JumpLinkObjectMesh"):
 		_new_jump_link_object_mesh = _jump_link_object_mesh_template.instance()
 		add_child(_new_jump_link_object_mesh)
@@ -52,15 +59,15 @@ func _enter_tree() -> void:
 		
 	
 	if not has_node("JumpLinkObjectCollision"):
-		var _new_jump_link_object_collision : CollisionShape
-		_new_jump_link_object_collision = CollisionShape.new()
+		var _new_jump_link_object_collision : CollisionShape3D
+		_new_jump_link_object_collision = CollisionShape3D.new()
 		add_child(_new_jump_link_object_collision)
 		_new_jump_link_object_collision.set_name("JumpLinkObjectCollision")
 		_new_jump_link_object_collision.set_owner(get_tree().get_edited_scene_root())
-		_new_jump_link_object_collision.make_convex_from_brothers()
+		_new_jump_link_object_collision.make_convex_from_siblings()
 
 	if not has_node("LinksContainer"):
-		var _new_link_container : Spatial = Spatial.new()
+		var _new_link_container : Node3D = Node3D.new()
 		add_child(_new_link_container)
 		_new_link_container.set_name("LinksContainer")
 		_new_link_container.set_owner(get_tree().get_edited_scene_root())
@@ -83,8 +90,8 @@ func _ready() -> void:
 	
 	for _jump_link_node in get_node("LinksContainer").get_children():
 		for link_position in _jump_link_node.get_children():
-			var _jump_point : Spatial = _jump_link_node.get_node("JumpingPosition")
-			var _land_point : Spatial = _jump_link_node.get_node("LandingPosition")
+			var _jump_point : Node3D = _jump_link_node.get_node("JumpingPosition")
+			var _land_point : Node3D = _jump_link_node.get_node("LandingPosition")
 			_jump_points.append(_jump_point)
 			_jump_links.append(_jump_link_node)
 			_jump_point_to_land_point[_jump_point] = _land_point
@@ -130,7 +137,7 @@ func _on_link_interacted(_link_jump_position, _jumplinkpath, _agent, _animation)
 	_agent.jump_link(_link_jump_position, _jump_point_to_land_point[_link_jump_position], _jumplinkpath, self, _animation)
 
 
-func interact(_agent : Spatial) -> void:
+func interact(_agent : Node3D) -> void:
 	
 	### used when an _agent interacts with a the collision area, e.g. a player pressing a prompt button
 	
@@ -143,11 +150,11 @@ func interact(_agent : Spatial) -> void:
 	_agent.jump_link(_closest_start_jump_node, _end_jump_node, self)
 
 
-func get_interact_position(_agent : Spatial) -> Vector3:
+func get_interact_position(_agent : Node3D) -> Vector3:
 	return _get_closest_jump_position(_agent).global_transform.origin
 
 
-func _get_closest_jump_position(_agent : Spatial) -> Spatial:
+func _get_closest_jump_position(_agent : Node3D) -> Node3D:
 	
 	### when a player interacts with the collision area from withing reach we don't have a dedicated start position and pick the closest one
 	
@@ -173,7 +180,7 @@ func add_debug() -> void:
 		var end = _jump_links[_jump_point].transform.origin
 		var _dir : Vector3 = end - begin
 		
-		var _draw_path_geometry = ImmediateGeometry.new()
+		var _draw_path_geometry = ImmediateGeometry3D.new()
 		
 		add_child(_draw_path_geometry)
 

@@ -9,43 +9,43 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spatial",
-"class": "JumpLink",
-"language": "GDScript",
+"base": "Node3D",
+"class": @"JumpLink",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLink.gd"
 }, {
-"base": "Spatial",
-"class": "JumpLinkAgent",
-"language": "GDScript",
+"base": "Node3D",
+"class": @"JumpLinkAgent",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLinkAgent.gd"
 }, {
-"base": "Navigation",
-"class": "JumpLinkNavigation",
-"language": "GDScript",
+"base": "Node",
+"class": @"JumpLinkNavigation",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLinkNavigation.gd"
 }, {
-"base": "Area",
-"class": "JumpLinkObject",
-"language": "GDScript",
+"base": "Area3D",
+"class": @"JumpLinkObject",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLinkObject.gd"
 }, {
-"base": "Path",
-"class": "JumpLinkPath",
-"language": "GDScript",
+"base": "Path3D",
+"class": @"JumpLinkPath",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLinkPath.gd"
 }, {
 "base": "Position3D",
-"class": "JumpLinkPosition",
-"language": "GDScript",
+"class": @"JumpLinkPosition",
+"language": @"GDScript",
 "path": "res://addons/navigation_jump_links/scripts/JumpLinkPosition.gd"
 } ]
 _global_script_class_icons={
-"JumpLink": "res://addons/navigation_jump_links/icons/JumpLink.png",
-"JumpLinkAgent": "res://addons/navigation_jump_links/icons/JumpLinkAgent.png",
-"JumpLinkNavigation": "res://addons/navigation_jump_links/icons/JumpLinkNavigation.png",
-"JumpLinkObject": "res://addons/navigation_jump_links/icons/JumpLinkObject.png",
-"JumpLinkPath": "res://addons/navigation_jump_links/icons/JumpLinkPath.png",
-"JumpLinkPosition": "res://addons/navigation_jump_links/icons/JumpLinkPosition.png"
+@"JumpLinkPath": "res://addons/navigation_jump_links/icons/JumpLinkPath.png",
+@"JumpLinkPosition": "res://addons/navigation_jump_links/icons/JumpLinkPosition.png",
+@"JumpLinkAgent": "res://addons/navigation_jump_links/icons/JumpLinkAgent.png",
+@"JumpLinkObject": "res://addons/navigation_jump_links/icons/JumpLinkObject.png",
+@"JumpLink": "res://addons/navigation_jump_links/icons/JumpLink.png",
+@"JumpLinkNavigation": "res://addons/navigation_jump_links/icons/JumpLinkNavigation.png"
 }
 
 [application]
@@ -64,7 +64,7 @@ window/size/height=720
 
 [editor_plugins]
 
-enabled=PoolStringArray( "navigation_jump_links" )
+enabled=PackedStringArray(  )
 
 [gdnative]
 

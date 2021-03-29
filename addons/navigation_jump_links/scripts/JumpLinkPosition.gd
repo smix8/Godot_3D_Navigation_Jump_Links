@@ -1,14 +1,17 @@
+
+class_name JumpLinkPosition
+
 extends Position3D
 
-class_name JumpLinkPosition, "res://addons/navigation_jump_links/icons/JumpLinkPosition.png"
+@icon("res://addons/navigation_jump_links/icons/JumpLinkPosition.png")
 
 ##############################################################################
 ### Template positionmarker for a JumpLink's JumpingPosition or LandingPosition
 ##############################################################################
 
-export(NodePath) var override_navmesh_path
+@export var override_navmesh_path : NodePath
 
-var _override_navmesh : NavigationMeshInstance = null
+var _override_navmesh : NavigationRegion3D = null
 
 func _ready():
 	if override_navmesh_path:

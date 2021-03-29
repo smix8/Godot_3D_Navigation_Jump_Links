@@ -5,8 +5,10 @@
 
 Navigation Jump Links Addon for Godot Game Engine.
 
-Master branch -> Godot 4.x (requires new NavigationServer3D and NavigationAgent3D)
-3.x branch -> Godot 3.2+
+Godot 4.x version can be found in the master branch.
+
+Godot 3.x version can be found in the 3.x branch.
+
 
 
 ## Features | Examples:

@@ -1,7 +1,9 @@
-tool
-extends Spatial
 
-class_name JumpLinkAgent, "res://addons/navigation_jump_links/icons/JumpLinkAgent.png"
+class_name JumpLinkAgent
+
+extends Node3D
+
+@icon("res://addons/navigation_jump_links/icons/JumpLinkAgent.png")
 
 ##############################################################################
 ### Template for agents that want to use JumpLink nodes
@@ -16,33 +18,33 @@ signal started_movement
 signal stopped_movement
 
 ### print (a lot) of debug messages for the agents movement behaviour
-export(bool) var debug_print = false
+@export var debug_print : bool = false
 ### draw lines to visualize agents current movement path
-export(bool) var debug_draw_path = true
+@export var debug_draw_path : bool = true
 ### distance required to allow interactions with a JumpLinkObjects collision area
-export(float) var link_interaction_range = 0.5
+@export var link_interaction_range : float = 0.5
 
 ### distance to landing node before agent is considered as successfully "landed" after a jump
-export(float) var jump_to_landing_distance = 0.25
+@export var jump_to_landing_distance : float = 0.25
 
 ### time in seconds before the first  followlink in queue gets automatically removed
 ### prevents agents from getting stucked under bad circumstance
 ### shouldn't be set to low or otherwise an agent will make unnecessary path calls when traversing a large navmesh
-export(float) var follow_target_link_timeout = 5.0
+@export var follow_target_link_timeout : float = 5.0
 
 ### time in seconds before a following agent updates path to target
 ### set as high as possible to preserver performance
 ### set as low as needed to react fast enough to target position changes
-export(float) var follow_update_interval = 1.0
+@export var follow_update_interval : float = 1.0
 
 ### string tags, if matched and found on jumplinkobjects permits usage of jumplink
-export(Array, String) var jumplink_tags
+@export var jumplink_tags : Array[String]
 
 
-export(float) var movement_speed = 6.0
+@export var movement_speed : float = 6.0
 
 ### jumplinknavigation
-var _navigation : Navigation
+var _navigation : JumpLinkNavigation
 
 ### jumplinks
 var _jumping_link : bool = false
@@ -50,11 +52,11 @@ var _jump_link_start_transform : Transform
 var _jump_link_end_transform : Transform
 var _jump_process_time : float = 0.001
 var _jumplink_nodepath : Array
-var _jumplink_pathfollow : PathFollow
+var _jumplink_pathfollow : PathFollow3D
 var jump_link_timecost = 1.0
 
 ### following
-var _follow_target : Spatial
+var _follow_target : Node3D
 var following : bool = false
 var _follow_check_distance_interval = 0.5
 var _is_following_target_link : bool = false
@@ -74,7 +76,7 @@ func _ready() -> void:
 	set_process(false)
 
 
-func set_navigation(_new_navigation_node : Navigation) -> void:
+func set_navigation(_new_navigation_node : JumpLinkNavigation) -> void:
 	_navigation = _new_navigation_node
 	set_process(true)
 
@@ -136,15 +138,15 @@ func _process_bailout(_delta : float) -> void:
 				print( "'%s' gave up following link" % get_name() )
 
 
-func jump_link(_start_jump_link_node, _end_jump_link_node, _jumplinkpath = null, jump_node = null, _animation = "") -> bool:
+func jump_link(_start_jump_link_node, _end_jump_link_node, _jumplinkpath, jump_node, _animation = "") -> bool:
 	
 	
 	if _jumping_link:
 		return false
-		
+	
 	### customize pathfollow behaviour here
 	if _jumplinkpath:
-		_jumplink_pathfollow = PathFollow.new()
+		_jumplink_pathfollow = PathFollow3D.new()
 		_jumplink_pathfollow.set_loop(false)
 		_jumplinkpath.add_child(_jumplink_pathfollow)
 		
@@ -353,7 +355,7 @@ func _update_path(_target_position : Vector3) -> void:
 
 func add_debug() -> void:
 	
-	var _draw_path_geometry = ImmediateGeometry.new()
+	var _draw_path_geometry = ImmediateGeometry3D.new()
 	
 	_draw_path_geometry.cast_shadow = false
 	add_child(_draw_path_geometry)

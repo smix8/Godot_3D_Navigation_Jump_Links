@@ -1,18 +1,18 @@
-extends Spatial
+extends Node3D
 
 ### Setup for controls and camera for all demo scenes
 
-export(bool) var debug_print = false
+@export var debug_print : bool = false
 
 
-var _player : Spatial
-var _camera : Camera
-var _camera_anchor : Spatial
+var _player : Node3D
+var _camera : Camera3D
+var _camera_anchor : Node3D
 var _camera_y_rotation = 0.0
 var _debug_nodes : Array = []
 
-onready var _navigation : Navigation = get_node("JumpLinkNavigation")
-onready var _move_target_marker : Spatial = get_node("MoveTargetMarker")
+@onready var _navigation : Node = get_node("JumpLinkNavigation")
+@onready var _move_target_marker : Node3D = get_node("MoveTargetMarker")
 
 
 func _ready() -> void:
@@ -37,7 +37,7 @@ func _ready() -> void:
 
 func _unhandled_input(event) -> void:
 	
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var from = _camera.project_ray_origin(event.position)
 		var to = from + _camera.project_ray_normal(event.position) * 100
 		var _target_point : Vector3 = _navigation.get_closest_point_to_segment(from, to)
@@ -46,7 +46,7 @@ func _unhandled_input(event) -> void:
 		_move_target_marker.global_transform.origin = _target_point
 	
 	if event is InputEventMouseMotion:
-		if event.button_mask & (BUTTON_MASK_MIDDLE + BUTTON_MASK_RIGHT):
+		if event.button_mask & (MOUSE_BUTTON_MASK_MIDDLE + MOUSE_BUTTON_MASK_RIGHT):
 			_camera_y_rotation += event.relative.x * 0.005
 			_camera_anchor.set_rotation(Vector3(0, _camera_y_rotation, 0))
 			

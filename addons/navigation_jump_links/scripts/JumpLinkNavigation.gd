@@ -1,7 +1,9 @@
-tool
-extends Navigation
 
-class_name JumpLinkNavigation, "res://addons/navigation_jump_links/icons/JumpLinkNavigation.png"
+class_name JumpLinkNavigation
+
+extends Node
+
+@icon("res://addons/navigation_jump_links/icons/JumpLinkNavigation.png")
 
 ##############################################################################
 ### Extended Navigation node that creates the jumplink mapping at scene start
@@ -9,10 +11,12 @@ class_name JumpLinkNavigation, "res://addons/navigation_jump_links/icons/JumpLin
 ### JumpLinkAgent's internally call JumpLinkNavigation.get_jumplink_path() to aquire a jumplink path Array from this node
 ##############################################################################
 
-export(bool) var draw_path = false
-export(bool) var debug_print = false
+@export var draw_path : bool = false
+@export var debug_print : bool = false
 
 var _building_navmesh_links : bool = false
+
+var navigation_map_rid : RID
 
 var _navmesh_mappings : Dictionary = {
 	"default" : {
@@ -28,6 +32,8 @@ var _navmesh_mappings : Dictionary = {
 
 func _ready() -> void:
 	
+	navigation_map_rid = get_tree().get_root().get_world_3d().get_navigation_map()
+	
 	add_to_group("jump_link_navigations")
 
 	### need to wait to idle frame so every jumplinkobject is ready inside scene no matter the child position
@@ -41,17 +47,17 @@ func build_navmesh_links():
 	var _time : int = OS.get_system_time_msecs()
 	
 	var _all_jump_link_object_nodes : Array = get_tree().get_nodes_in_group("jump_link_objects")
-	if not _all_jump_link_object_nodes:
+	if _all_jump_link_object_nodes.is_empty():
 		return
 	var _all_jump_link_nodes : Array = get_tree().get_nodes_in_group("jump_links")
-	if not _all_jump_link_nodes:
+	if _all_jump_link_nodes.is_empty():
 		return
 		
 	### get all the available navigation mesh children and map all possible combinations	
 	var _navmeshes : Array = []
 	var _navmesh_children = get_children()
 	for _navmesh_child in _navmesh_children:
-		if _navmesh_child.is_class("NavigationMeshInstance"):
+		if _navmesh_child.is_class("NavigationRegion3D"):
 			_navmeshes.append(_navmesh_child)
 	
 	### collect all agent tags found in the scene
@@ -84,14 +90,16 @@ func build_navmesh_links():
 	
 			for _jump_link in _jump_links:
 				
-				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
-				var _end_pos_node : Spatial = _jump_link.get_landing_position()
+				var _start_pos_node : Node3D = _jump_link.get_jumping_position()
+				var _end_pos_node : Node3D = _jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				
+
+				var _start_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -109,14 +117,14 @@ func build_navmesh_links():
 			
 			for _jump_link in _jump_links:
 	
-				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
-				var _end_pos_node : Spatial =_jump_link.get_landing_position()
+				var _start_pos_node : Node3D = _jump_link.get_jumping_position()
+				var _end_pos_node : Node3D =_jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				var _start_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -142,14 +150,14 @@ func build_navmesh_links():
 			
 			for _jump_link in _jump_links:
 				
-				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
-				var _end_pos_node : Spatial =_jump_link.get_landing_position()
+				var _start_pos_node : Node3D = _jump_link.get_jumping_position()
+				var _end_pos_node : Node3D =_jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				var _start_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationRegion3D = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -157,7 +165,8 @@ func build_navmesh_links():
 						
 					for _start_jumplink in _navmesh_mappings[_mapping_tag]["navmesh_to_jumplink_start"][_end_pos_node_navmesh]:
 						_add_node_edge(_mapping_tag, _end_pos_node, _start_jumplink)
-						var _path : PoolVector3Array = get_simple_path(_end_pos_node.global_transform.origin, _start_jumplink.global_transform.origin)
+						
+						var _path : PackedVector3Array = NavigationServer3D.map_get_path(navigation_map_rid, _end_pos_node.global_transform.origin, _start_jumplink.global_transform.origin, true)
 						_add_node_weight(_mapping_tag, _end_pos_node, _start_jumplink, _get_path_length(_path))
 					
 	
@@ -205,20 +214,20 @@ func build_navmesh_links():
 	_building_navmesh_links = false
 
 
-func get_jumplink_path(_agent : Spatial, _target_pos : Vector3) -> Array:
+func get_jumplink_path(_agent : Node3D, _target_pos : Vector3) -> Array:
 	
 	if _building_navmesh_links:
 		### rebuilding maps and recalculating costs, meanwhile fall back to default pathfinding
-		return [ get_simple_path(_agent.global_transform.origin, _target_pos), null ]
+		return [ NavigationServer3D.map_get_path(navigation_map_rid, _agent.global_transform.origin, _target_pos, true), null ]
 		
 	var _agent_pos : Vector3 = _agent.global_transform.origin
-	var _agent_pos_navmesh = get_closest_point_owner(_agent_pos)
-	var _target_pos_navmesh = get_closest_point_owner(_target_pos)
+	var _agent_pos_navmesh = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _agent_pos)
+	var _target_pos_navmesh = NavigationServer3D.map_get_closest_point_owner(navigation_map_rid, _target_pos)
 	
 	var _jumplink = null
-	var _path : PoolVector3Array = []
+	var _path : PackedVector3Array = []
 	
-	_path = get_simple_path(_agent_pos, _target_pos)
+	_path = NavigationServer3D.map_get_path(navigation_map_rid, _agent_pos, _target_pos, true)
 	var _path_len : float = _get_path_length(_path)
 	
 	var _shortest_node_path : Array = []
@@ -235,7 +244,7 @@ func get_jumplink_path(_agent : Spatial, _target_pos : Vector3) -> Array:
 		for _start_jumplink in _navmesh_mappings[_mapping_tag]["node_path_mapping"][_agent_pos_navmesh][_target_pos_navmesh].keys():
 			
 			### we use direct line distances instead of real pathlens for _agent->firstnode, lastnode->_target which is less accurate
-			### reason is that get_simple_path() can sometimes return values that get agents stuck in a loop when developers use only one large navmesh
+			### reason is that NavigationServer3D.map_get_path(navigation_map_rid, ) can sometimes return values that get agents stuck in a loop when developers use only one large navmesh
 			
 			var _agent_to_start_distance : float = _agent_pos.distance_to(_start_jumplink.global_transform.origin)
 			
@@ -254,17 +263,17 @@ func get_jumplink_path(_agent : Spatial, _target_pos : Vector3) -> Array:
 	
 	if _shortest_node_path:
 		if _agent_pos_navmesh != _target_pos_navmesh:
-			_path = get_simple_path(_agent_pos, _shortest_node_path[0].global_transform.origin)
+			_path = NavigationServer3D.map_get_path(navigation_map_rid, _agent_pos, _shortest_node_path[0].global_transform.origin, true)
 			_jumplink = _shortest_node_path[0]
 		elif _shortest_node_path_cost < _path_len: ### we are on the same navmesh, see if we are still faster with links compared to walking
-			_path = get_simple_path(_agent_pos, _shortest_node_path[0].global_transform.origin)
+			_path = NavigationServer3D.map_get_path(navigation_map_rid, _agent_pos, _shortest_node_path[0].global_transform.origin, true)
 			_jumplink = _shortest_node_path[0]
-
+	
 	### make sure a duplicated nodepath Array is returned to protect the saved path ref in the dictionary from changes
 	return [_path, _jumplink, _shortest_node_path.duplicate()]
 
 
-func _get_path_length(_path : PoolVector3Array) -> float:
+func _get_path_length(_path : PackedVector3Array) -> float:
 	
 	var _sum : float = 0.0
 	if _path.size() > 1:
@@ -292,10 +301,10 @@ func _add_node_weight(_mapping_tag, from_node, to_node, node_weight) -> void:
 	_navmesh_mappings[_mapping_tag]["node_weights"][from_node][to_node] = node_weight
 
 
-func _jumplink_dijsktra(_mapping_tag, from_node : Spatial, to_node : Spatial) -> Array:
+func _jumplink_dijsktra(_mapping_tag, from_node : Node3D, to_node : Node3D) -> Array:
 		
 	var _shortest_node_paths : Dictionary = { from_node : [null, 0] }
-	var _current_node : Spatial = from_node
+	var _current_node : Node3D = from_node
 	var _visited_nodes : Array = []
 	
 	while _current_node != to_node:
@@ -323,7 +332,7 @@ func _jumplink_dijsktra(_mapping_tag, from_node : Spatial, to_node : Spatial) ->
 			if not node in _visited_nodes:
 				next_destinations = { node: _shortest_node_paths[node] }
 		
-		if not next_destinations:
+		if next_destinations.is_empty():
 			print("no navmeshroute possible from '%s' to '%s'" % [from_node, to_node])
 			return []
 		# next node is the destination with the lowest weight
@@ -337,7 +346,7 @@ func _jumplink_dijsktra(_mapping_tag, from_node : Spatial, to_node : Spatial) ->
 		_current_node = _smallest_node
 
 	var _node_connection_path : Array = []
-	var _next_node : Spatial
+	var _next_node : Node3D
 	
 	while not _current_node == null:
 		_node_connection_path.append(_current_node)

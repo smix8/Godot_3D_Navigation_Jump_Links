@@ -1,7 +1,9 @@
-tool
-extends Spatial
 
-class_name JumpLink, "res://addons/navigation_jump_links/icons/JumpLink.png"
+class_name JumpLink
+
+extends Node3D
+
+@icon("res://addons/navigation_jump_links/icons/JumpLink.png")
 
 ##############################################################################
 ### Holds a pair of JumpLinkPosition nodes to mark JumpingPosition and LandingPosition
@@ -15,13 +17,18 @@ var _jump_material = preload("res://addons/navigation_jump_links/debug/JumpLinkP
 var _land_material = preload("res://addons/navigation_jump_links/debug/JumpLinkPositionLandingMaterial.tres")
 var _link_position_template = preload("res://addons/navigation_jump_links/nodes/JumpLinkPosition.tscn")
 
-export(float) var timecost = 1.0 setget _set_timecost, get_timecost
-export(String) var animation = ""
+@export var timecost : float = 1.0:
+	set(value):
+		_set_timecost(value)
+	get:
+		return get_timecost()
 
-onready var _link_jump_position : Position3D = get_node("JumpingPosition")
-onready var _link_land_position : Position3D = get_node("LandingPosition")
+@export var animation : String = ""
 
-var _jumplinkpath : Path = null
+@onready var _link_jump_position : Position3D = get_node("JumpingPosition")
+@onready var _link_land_position : Position3D = get_node("LandingPosition")
+
+var _jumplinkpath : Path3D = null
 
 
 func _ready() -> void:
@@ -89,7 +96,7 @@ func _enter_tree() -> void:
 	add_debug()
 	
 
-func interact(_agent : Spatial) -> void:
+func interact(_agent : Node3D) -> void:
 	emit_signal("link_interacted", _link_jump_position, _jumplinkpath, _agent, animation)
 
 
@@ -102,8 +109,8 @@ func _set_timecost(new_timecost : float) -> void:
 
 func add_debug() -> void:
 	
-	var _draw_path_geometry = ImmediateGeometry.new()
-	var _path_draw_material = SpatialMaterial.new()
+	var _draw_path_geometry = ImmediateGeometry3D.new()
+	var _path_draw_material = StandardMaterial3D.new()
 	
 	_draw_path_geometry.cast_shadow = false
 	

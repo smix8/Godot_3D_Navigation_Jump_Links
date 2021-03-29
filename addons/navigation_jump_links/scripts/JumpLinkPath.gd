@@ -1,7 +1,9 @@
-tool
-extends Path
 
-class_name JumpLinkPath, "res://addons/navigation_jump_links/icons/JumpLinkPath.png"
+class_name JumpLinkPath
+
+extends Path3D
+
+@icon("res://addons/navigation_jump_links/icons/JumpLinkPath.png")
 
 ##############################################################################
 ### Optional Path node with a Curve3D for Pathfollow support to customize jump trajectory
