@@ -3,7 +3,11 @@
 [![banner](img/repo_banner.png)](https://youtu.be/iNdomkaKEEM)
 
 
-Navigation Jump Links Addon for Godot Game Engine 3.2+
+Navigation Jump Links Addon for Godot Game Engine.
+
+Master branch -> Godot 4.x (requires new NavigationServer3D and NavigationAgent3D)
+3.x branch -> Godot 3.2+
+
 
 ## Features | Examples:
 - Create non-conventional traversal options for both AI agents and players.
@@ -60,7 +64,7 @@ Game engines like Unreal (Jumplink) and Unity (Off-Mesh Link) provide some basic
 Godot has none and this addon tries to fix this by enabling new pathfinding and gameplay options that work for both player and AI.
 
 ... to be honest I needed parkour pathfinding for my own game project.
-As it stands the reworked pathfinding in Godot 4.0 is still very limited so a homebrew implementation was the only option left.
+As it stands the reworked pathfinding in Godot 4.x is still very limited so a homebrew implementation was the only option left.
 
 - Agents can now find full paths across marked navigation meshes
 - Agents will now consider using game objects to travel faster
@@ -275,9 +279,11 @@ Then replace the 'build_navmesh_links()' function in the '_ready()' part of the 
 ### I get error / warning msgs about missing viewport textures and paths
 Known Godot issue. The error printer is faster than the node on first frame due to the way childnodes are processed. It should still work without problems and the viewports are for debug only so they can also be removed for release export.
 
-### Does this work with Godot 4.0?
-It was tested with a master build of Godot 4.0 some time ago on the new 3DNavigation and 3DNavigationAgents and worked without issues.
-GDScript development added breaking changes to the scripts in 4.0 and I have no plans to update and maintain both version while it isn't more stabilized. I plan full support for Godot 4.0 on release.
+### Does this work with Godot 4.x?
+
+It was tested with a master build of Godot 4.x some time ago on the new 3DNavigation and 3DNavigationAgents and worked without issues.
+The only differences for now between Godot 4.x and Godot 3.x is the removel of Navigation as a Node, so the JumpLinkNavigation no longer extends Navigation.
+This also required to move the functionally to a new JumpLinkNavigation Node to route path requests to the new NavigationServer3D.
 
 
 ## License
