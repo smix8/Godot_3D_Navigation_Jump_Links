@@ -9,7 +9,8 @@ Godot 4.x version can be found in the master branch.
 
 Godot 3.x version can be found in the 3.x branch.
 
-
+Proposal made on the official Godot github by someone else to add Navigation Jumplinks to the Engine.
+https://github.com/godotengine/godot-proposals/issues/2527
 
 ## Features | Examples:
 - Create non-conventional traversal options for both AI agents and players.
