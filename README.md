@@ -1,13 +1,16 @@
 # Godot 3D Navigation Jump Links
 
-[![banner](img/repo_banner.png)](https://youtu.be/iNdomkaKEEM)
+[![banner](https://user-images.githubusercontent.com/52464204/131028063-0b66684c-7acd-43ee-b622-63ecb6bd3135.png)](https://youtu.be/iNdomkaKEEM)
 
+Navigation Jump Links module for Godot Game Engine.
 
-Navigation Jump Links Addon for Godot Game Engine.
+The module is work in progress, only use the master/main branch for testing.
 
-Godot 4.x version can be found in the master branch.
+See [Godot 4.x](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_4.x) and [Godot 3.x](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_3.x) branch respectively.
 
-Godot 3.x version can be found in the 3.x branch.
+An addon version made with GDScript is available. This version does not have the full feature set due to performance restrictions, addons are just to slow.
+
+See [Godot 4.x GDScript](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_4.x_gdscript) and [Godot 3.x GDScript](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_3.x_gdscript) branch respectively.
 
 Proposal made on the official Godot github by someone else to add Navigation Jumplinks to the Engine.
 https://github.com/godotengine/godot-proposals/issues/2527
@@ -85,7 +88,7 @@ As it stands the reworked pathfinding in Godot 4.x is still very limited so a ho
 
 ## Setup | Usage
 
-![banner](img/jump_link_setup.gif)
+![jump_link_setup](https://user-images.githubusercontent.com/52464204/131028318-112dad88-e55c-4d15-8978-2a0473e091ca.gif)
 
 1. Add a `JumpLinkNavigation` node to the scene (or replace existing `Navigation` node(s) ).
 2. Add `NavigationMeshInstance` children like usual to the `JumpLinkNavigation` node.
@@ -100,11 +103,11 @@ New `JumpLinkObject` starts with one `JumpLink` pair that consists of a `Jumping
 Use JumpLinkAgent.set_navigation() to assign the JumpLinkNavigation node that the agent should use.
 Use JumpLinkAgent.set_movement_target() to move the agent to a Vector3 position in the scene.
 
-![banner](img/jump_link_node.gif)
+![jump_link_node](https://user-images.githubusercontent.com/52464204/131028365-99410a85-aaa7-46a9-b3f7-3d7b2215c18e.gif)
 
 ## Scenetree Example
 
-![banner](img/jump_link_scenetree.png)
+![jump_link_scenetree](https://user-images.githubusercontent.com/52464204/131028392-5452b65a-b3dd-4c0f-aac0-2f7859892ced.png)
 
 ```bash
 JumpLinkNavigation
