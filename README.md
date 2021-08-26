@@ -1,6 +1,6 @@
 # Godot 3D Navigation Jump Links
 
-[![banner](img/repo_banner.png)](https://youtu.be/iNdomkaKEEM)
+![banner](https://user-images.githubusercontent.com/52464204/131028063-0b66684c-7acd-43ee-b622-63ecb6bd3135.png)
 
 
 Navigation Jump Links Addon for Godot Game Engine 3.2+
