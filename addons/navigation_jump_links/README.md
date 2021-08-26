@@ -1,16 +1,9 @@
 # Godot 3D Navigation Jump Links
 
-[![banner](img/repo_banner.png)](https://youtu.be/iNdomkaKEEM)
+![banner](https://user-images.githubusercontent.com/52464204/131028063-0b66684c-7acd-43ee-b622-63ecb6bd3135.png)
 
 
-Navigation Jump Links Addon for Godot Game Engine.
-
-Godot 4.x version can be found in the master branch.
-
-Godot 3.x version can be found in the 3.x branch.
-
-Proposal made on the official Godot github by someone else to add Navigation Jumplinks to the Engine.
-https://github.com/godotengine/godot-proposals/issues/2527
+Navigation Jump Links Addon for Godot Game Engine 3.2+
 
 ## Features | Examples:
 - Create non-conventional traversal options for both AI agents and players.
@@ -67,7 +60,7 @@ Game engines like Unreal (Jumplink) and Unity (Off-Mesh Link) provide some basic
 Godot has none and this addon tries to fix this by enabling new pathfinding and gameplay options that work for both player and AI.
 
 ... to be honest I needed parkour pathfinding for my own game project.
-As it stands the reworked pathfinding in Godot 4.x is still very limited so a homebrew implementation was the only option left.
+As it stands the reworked pathfinding in Godot 4.0 is still very limited so a homebrew implementation was the only option left.
 
 - Agents can now find full paths across marked navigation meshes
 - Agents will now consider using game objects to travel faster
@@ -85,7 +78,7 @@ As it stands the reworked pathfinding in Godot 4.x is still very limited so a ho
 
 ## Setup | Usage
 
-![banner](img/jump_link_setup.gif)
+![jump_link_setup](https://user-images.githubusercontent.com/52464204/131028318-112dad88-e55c-4d15-8978-2a0473e091ca.gif)
 
 1. Add a `JumpLinkNavigation` node to the scene (or replace existing `Navigation` node(s) ).
 2. Add `NavigationMeshInstance` children like usual to the `JumpLinkNavigation` node.
@@ -100,11 +93,11 @@ New `JumpLinkObject` starts with one `JumpLink` pair that consists of a `Jumping
 Use JumpLinkAgent.set_navigation() to assign the JumpLinkNavigation node that the agent should use.
 Use JumpLinkAgent.set_movement_target() to move the agent to a Vector3 position in the scene.
 
-![banner](img/jump_link_node.gif)
+![jump_link_node](https://user-images.githubusercontent.com/52464204/131028365-99410a85-aaa7-46a9-b3f7-3d7b2215c18e.gif)
 
 ## Scenetree Example
 
-![banner](img/jump_link_scenetree.png)
+![jump_link_scenetree](https://user-images.githubusercontent.com/52464204/131028392-5452b65a-b3dd-4c0f-aac0-2f7859892ced.png)
 
 ```bash
 JumpLinkNavigation
@@ -282,11 +275,9 @@ Then replace the 'build_navmesh_links()' function in the '_ready()' part of the 
 ### I get error / warning msgs about missing viewport textures and paths
 Known Godot issue. The error printer is faster than the node on first frame due to the way childnodes are processed. It should still work without problems and the viewports are for debug only so they can also be removed for release export.
 
-### Does this work with Godot 4.x?
-
-It was tested with a master build of Godot 4.x some time ago on the new 3DNavigation and 3DNavigationAgents and worked without issues.
-The only differences for now between Godot 4.x and Godot 3.x is the removel of Navigation as a Node, so the JumpLinkNavigation no longer extends Navigation.
-This also required to move the functionally to a new JumpLinkNavigation Node to route path requests to the new NavigationServer3D.
+### Does this work with Godot 4.0?
+It was tested with a master build of Godot 4.0 some time ago on the new 3DNavigation and 3DNavigationAgents and worked without issues.
+GDScript development added breaking changes to the scripts in 4.0 and I have no plans to update and maintain both version while it isn't more stabilized. I plan full support for Godot 4.0 on release.
 
 
 ## License
