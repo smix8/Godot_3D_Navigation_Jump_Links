@@ -78,7 +78,7 @@ As it stands the reworked pathfinding in Godot 4.0 is still very limited so a ho
 
 ## Setup | Usage
 
-![banner](img/jump_link_setup.gif)
+![jump_link_setup](https://user-images.githubusercontent.com/52464204/131028318-112dad88-e55c-4d15-8978-2a0473e091ca.gif)
 
 1. Add a `JumpLinkNavigation` node to the scene (or replace existing `Navigation` node(s) ).
 2. Add `NavigationMeshInstance` children like usual to the `JumpLinkNavigation` node.
@@ -93,11 +93,11 @@ New `JumpLinkObject` starts with one `JumpLink` pair that consists of a `Jumping
 Use JumpLinkAgent.set_navigation() to assign the JumpLinkNavigation node that the agent should use.
 Use JumpLinkAgent.set_movement_target() to move the agent to a Vector3 position in the scene.
 
-![banner](img/jump_link_node.gif)
+![jump_link_node](https://user-images.githubusercontent.com/52464204/131028365-99410a85-aaa7-46a9-b3f7-3d7b2215c18e.gif)
 
 ## Scenetree Example
 
-![banner](img/jump_link_scenetree.png)
+![jump_link_scenetree](https://user-images.githubusercontent.com/52464204/131028392-5452b65a-b3dd-4c0f-aac0-2f7859892ced.png)
 
 ```bash
 JumpLinkNavigation
