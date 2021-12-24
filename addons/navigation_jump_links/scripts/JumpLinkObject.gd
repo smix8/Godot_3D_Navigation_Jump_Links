@@ -1,4 +1,3 @@
-tool
 extends Area
 
 class_name JumpLinkObject, "res://addons/navigation_jump_links/icons/JumpLinkObject.png"
@@ -168,6 +167,11 @@ func add_debug() -> void:
 	### visualization of jumplink connections and points with debug on
 	
 	for _jump_point in _jump_points:
+		
+		if not is_instance_valid(_jump_point):
+			continue
+		if not _jump_point.is_inside_tree():
+			continue
 		
 		var begin = _jump_point.transform.origin
 		var end = _jump_links[_jump_point].transform.origin

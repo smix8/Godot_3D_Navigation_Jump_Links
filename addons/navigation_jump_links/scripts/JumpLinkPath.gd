@@ -1,4 +1,3 @@
-tool
 extends Path
 
 class_name JumpLinkPath, "res://addons/navigation_jump_links/icons/JumpLinkPath.png"

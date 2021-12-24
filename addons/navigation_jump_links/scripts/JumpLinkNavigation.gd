@@ -1,4 +1,3 @@
-tool
 extends Navigation
 
 class_name JumpLinkNavigation, "res://addons/navigation_jump_links/icons/JumpLinkNavigation.png"

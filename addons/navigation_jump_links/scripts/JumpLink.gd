@@ -1,4 +1,3 @@
-tool
 extends Spatial
 
 class_name JumpLink, "res://addons/navigation_jump_links/icons/JumpLink.png"
