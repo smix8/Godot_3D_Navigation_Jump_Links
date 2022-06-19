@@ -1,4 +1,3 @@
-tool
 extends Navigation
 
 class_name JumpLinkNavigation, "res://addons/navigation_jump_links/icons/JumpLinkNavigation.png"
@@ -26,6 +25,12 @@ var _navmesh_mappings : Dictionary = {
 	}
 
 
+var region_rid_to_region_node : Dictionary = {}
+
+func _get_closest_point_owner(point : Vector3) -> NavigationMeshInstance:
+	var owner_rid : RID = NavigationServer.map_get_closest_point_owner(get_rid(), point)
+	return region_rid_to_region_node[owner_rid]
+
 func _ready() -> void:
 	
 	add_to_group("jump_link_navigations")
@@ -37,6 +42,7 @@ func _ready() -> void:
 func build_navmesh_links():
 	
 	_building_navmesh_links = true
+	yield(get_tree(),"physics_frame") # wait for navigationserver synchronisation
 	
 	var _time : int = OS.get_system_time_msecs()
 	
@@ -53,6 +59,7 @@ func build_navmesh_links():
 	for _navmesh_child in _navmesh_children:
 		if _navmesh_child.is_class("NavigationMeshInstance"):
 			_navmeshes.append(_navmesh_child)
+			region_rid_to_region_node[_navmesh_child.get_region_rid()] = _navmesh_child
 	
 	### collect all agent tags found in the scene
 	var _agent_tags : Array = []
@@ -87,11 +94,11 @@ func build_navmesh_links():
 				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
 				var _end_pos_node : Spatial = _jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				var _start_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -112,11 +119,11 @@ func build_navmesh_links():
 				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
 				var _end_pos_node : Spatial =_jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				var _start_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -145,11 +152,11 @@ func build_navmesh_links():
 				var _start_pos_node : Spatial = _jump_link.get_jumping_position()
 				var _end_pos_node : Spatial =_jump_link.get_landing_position()
 				
-				var _start_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_start_pos_node.global_transform.origin)
+				var _start_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_start_pos_node.global_transform.origin)
 				if _start_pos_node.get_override_navmesh():
 					_start_pos_node_navmesh = _start_pos_node.get_override_navmesh()
 	
-				var _end_pos_node_navmesh : NavigationMeshInstance = get_closest_point_owner(_end_pos_node.global_transform.origin)
+				var _end_pos_node_navmesh : NavigationMeshInstance = _get_closest_point_owner(_end_pos_node.global_transform.origin)
 				if _end_pos_node.get_override_navmesh():
 					_end_pos_node_navmesh = _end_pos_node.get_override_navmesh()
 				
@@ -212,8 +219,8 @@ func get_jumplink_path(_agent : Spatial, _target_pos : Vector3) -> Array:
 		return [ get_simple_path(_agent.global_transform.origin, _target_pos), null ]
 		
 	var _agent_pos : Vector3 = _agent.global_transform.origin
-	var _agent_pos_navmesh = get_closest_point_owner(_agent_pos)
-	var _target_pos_navmesh = get_closest_point_owner(_target_pos)
+	var _agent_pos_navmesh = _get_closest_point_owner(_agent_pos)
+	var _target_pos_navmesh = _get_closest_point_owner(_target_pos)
 	
 	var _jumplink = null
 	var _path : PoolVector3Array = []
