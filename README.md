@@ -2,18 +2,9 @@
 
 [![banner](https://user-images.githubusercontent.com/52464204/131028063-0b66684c-7acd-43ee-b622-63ecb6bd3135.png)](https://youtu.be/iNdomkaKEEM)
 
-Navigation Jump Links module for Godot Game Engine.
+Navigation Jump Links module for Godot3 Game Engine.
 
-The module is work in progress, only use the master/main branch for testing.
-
-See [Godot 4.x](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_4.x) and [Godot 3.x](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_3.x) branch respectively.
-
-An addon version made with GDScript is available. This version does not have the full feature set due to performance restrictions, addons are just to slow.
-
-See [Godot 4.x GDScript](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_4.x_gdscript) and [Godot 3.x GDScript](https://github.com/smix8/Godot_3D_Navigation_Jump_Links/tree/godot_3.x_gdscript) branch respectively.
-
-Proposal made on the official Godot github by someone else to add Navigation Jumplinks to the Engine.
-https://github.com/godotengine/godot-proposals/issues/2527
+NavigationLinks are core in Godot4 so this addon is no longer needed there. Addon develoment therefor stopped and this repo archived.
 
 ## Features | Examples:
 - Create non-conventional traversal options for both AI agents and players.
@@ -265,9 +256,6 @@ A few simple demo levels are included that reuse assets from the official Godot 
 
 ## FAQ
 
-### I found a bug / want to propose a feature
-Always open to suggestions. Open an issue and/or reach out to me on a social channel.
-
 ### Can I change weight/timecost through script?
 Yes but it will not change pathfinding considerations of agents immediately and only the interaction jump will be affected. To update the entire pathfinding after changes run `build_navmesh_links()` on the `JumpLinkNavigation` manually. This will turn any agent `get_jumplink_path()` call to a default `get_simple_path()` until the jumplink mapping is rebuild so agents are meanwhile unable to jump.
 
@@ -287,20 +275,7 @@ Known Godot issue. The error printer is faster than the node on first frame due 
 
 ### Does this work with Godot 4.x?
 
-It was tested with a master build of Godot 4.x some time ago on the new 3DNavigation and 3DNavigationAgents and worked without issues.
-The only differences for now between Godot 4.x and Godot 3.x is the removel of Navigation as a Node, so the JumpLinkNavigation no longer extends Navigation.
-This also required to move the functionally to a new JumpLinkNavigation Node to route path requests to the new NavigationServer3D.
-
+Godot4 has navigation links build into the core engine so this addon is not needed.
 
 ## License
 MIT
-
-## Known issues
-
-- Quirky code, some pointless strings and extra loops. Also see known limitations.
-
-## ToDo
-
-- Create unique icons to tell the different node types easier apart
-- Backgroundthread option for (re)calculating the link mapping at runtime
-- Add "baking" option for very simple movement types like jumping down or across. Automatically place jumplink nodes in a level based on height and distance values.
